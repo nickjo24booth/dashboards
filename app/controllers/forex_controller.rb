@@ -1,4 +1,8 @@
 class ForexController < ApplicationController
+  def home_page
+    render({ :template => "exchange_templates/homepage.html.erb" })
+  end
+
   def list_pairs
     pairs_url = "https://api.exchangerate.host/symbols"
 
@@ -20,7 +24,7 @@ class ForexController < ApplicationController
   end
 
   def pairwise
-    @this_symbol = params.fetch("symbol")
+    @from_symbol = params.fetch("symbol_from")
 
     pairs_url = "https://api.exchangerate.host/symbols"
 
@@ -34,5 +38,23 @@ class ForexController < ApplicationController
     @symbols_array = @symbols_hash.keys
 
     render({ :template => "exchange_templates/indiv_pairs.html.erb" })
+  end
+
+  def conversion
+    @from_symbol = params.fetch("symbol_from")
+    @to_symbol = params.fetch("symbol_to")
+
+    results_url = "https://api.exchangerate.host/convert?from=#{@from_symbol}&to=#{@to_symbol}"
+
+    require "open-uri"
+    raw_response = URI.open(results_url).read
+
+    require "json"
+    parsed_pairs = JSON.parse(raw_response)
+
+    @result = parsed_pairs.fetch("result")
+    #This is a float.
+
+    render({ :template => "exchange_templates/result.html.erb" })
   end
 end
