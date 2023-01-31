@@ -6,4 +6,6 @@ get("/forex", {:controller => "forex", :action => "list_pairs"})
 get("/forex/:symbol_from", {:controller => "forex", :action => "pairwise"})
 get("/forex/:symbol_from/:symbol_to", {:controller => "forex", :action => "conversion"})
 
+get("/covid", {:controller => "covid", :action => "summary_page"})
+
 end
