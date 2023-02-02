@@ -1,0 +1,28 @@
+stateArray = [array of hashes....]
+
+elementKeys = stateArray[0].keys
+
+@newArray = Array.new
+
+stateArray.each do |state|
+  stateSymbol = state.fetch("state")
+  positive = state.fetch("positive")
+
+  newArray.push([stateSymbol, positive])
+end
+
+p newArray.length
+
+
+
+view: 
+@newArray
+
+@newArray.each do |data|
+  <tr>
+    <td>data[0] </td>
+    <td>data[1] </td>
+    <td>data[2] </td>
+    <td>data[3] </td>
+  </tr>
+end
